@@ -26,7 +26,10 @@ ui <- fluidPage(
     mainPanel(
       
       # Output: HTML table with requested number of observations ----
-      tableOutput("view")
+      tableOutput("view"),
+      
+      # Output: Plot the election results
+      plotOutput("plot")
     )
   )
 )
@@ -40,6 +43,11 @@ server <- function(input, output) {
   # Show the first "n" observations ----
   output$view <- renderTable({
     presidentialForecast
+  })
+  
+  # Plot the actual results
+  output$plot <- renderPlot({
+    plot(presidentialForecast$Actual)
   })
   
 }
