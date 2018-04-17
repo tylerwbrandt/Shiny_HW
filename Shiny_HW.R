@@ -50,11 +50,6 @@ server <- function(input, output) {
   library(EBMAforecast)
   data("presidentialForecast")
   
-  # Title Text
-  output$caption <- renderText({
-    paste("Actual results vs.", input$variable)
-  })
-  
   # Show the first "n" observations ----
   output$view <- renderTable({
     presidentialForecast
