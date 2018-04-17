@@ -59,7 +59,7 @@ server <- function(input, output) {
   # Plot the actual results
   output$plot <- renderPlot({
     plot(as.numeric(row.names(presidentialForecast)), presidentialForecast$Actual,
-         xlab = "Year", ylab = "Voting Percentage", col = "blue")
+         xlab = "Year", ylab = "Voting Percentage", col = "blue", main = "Voting Percentage by Year")
     if (input$variable == "Campbell"){
       points(as.numeric(row.names(presidentialForecast)), presidentialForecast$Campbell, col = "red")
     } else if (input$variable == "Lewis-Beck"){
