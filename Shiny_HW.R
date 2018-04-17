@@ -73,6 +73,8 @@ server <- function(input, output) {
     } else {
       points(as.numeric(row.names(presidentialForecast)), presidentialForecast$Abramowitz, col = "red")
     }
+    legend("topright", legend = c("Actual", input$variable),
+           col = c("blue", "red"), pch = c(1,1))
   })
   
   # Output click info
