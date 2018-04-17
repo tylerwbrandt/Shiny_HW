@@ -39,7 +39,8 @@ ui <- fluidPage(
       tableOutput("view"),
       
       # Output: Plot the election results
-      plotOutput("plot")
+      plotOutput("plot", click = "plot_click"),
+      verbatimTextOutput("info")
     )
   )
 )
@@ -72,6 +73,11 @@ server <- function(input, output) {
     } else {
       points(as.numeric(row.names(presidentialForecast)), presidentialForecast$Abramowitz, col = "red")
     }
+  })
+  
+  # Output click info
+  output$info <- renderText({
+    paste0("Year =", input$plot_click$x, "\nVoting Percentage =", input$plot_click$y)
   })
   
 }
