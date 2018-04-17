@@ -47,7 +47,7 @@ server <- function(input, output) {
   
   # Plot the actual results
   output$plot <- renderPlot({
-    plot(as.numeric(row.names(presidentialForecast)), presidentialForecast$Actual)
+    plot(as.numeric(row.names(presidentialForecast)), presidentialForecast$Actual, xlab = "Year", ylab = "Voting Percentage")
   })
   
 }
