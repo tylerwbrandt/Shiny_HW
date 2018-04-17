@@ -19,7 +19,17 @@ ui <- fluidPage(
       
       
       # Include Clarifying Text
-      helpText("Here are the results of presidential forecasts from 1952-2008")
+      helpText("Here are the results of presidential forecasts from 1952-2008"),
+      
+      # Input: Selector for Forecast model to plot with Actual results ----
+      selectInput("variable", "Forecast model:",
+                  c("Campbell",
+                    "Lewis-Beck",
+                    "EWT2C2",
+                    "Fair",
+                    "Hibbs",
+                    "Abramowitz"))
+      
     ),
     
     # Main panel for displaying outputs ----
@@ -40,6 +50,11 @@ server <- function(input, output) {
   library(EBMAforecast)
   data("presidentialForecast")
   
+  # Title Text
+  output$caption <- renderText({
+    paste("Actual results vs.", input$variable)
+  })
+  
   # Show the first "n" observations ----
   output$view <- renderTable({
     presidentialForecast
@@ -47,7 +62,21 @@ server <- function(input, output) {
   
   # Plot the actual results
   output$plot <- renderPlot({
-    plot(as.numeric(row.names(presidentialForecast)), presidentialForecast$Actual, xlab = "Year", ylab = "Voting Percentage")
+    plot(as.numeric(row.names(presidentialForecast)), presidentialForecast$Actual,
+         xlab = "Year", ylab = "Voting Percentage", col = "blue")
+    if (input$variable == "Campbell"){
+      points(as.numeric(row.names(presidentialForecast)), presidentialForecast$Campbell, col = "red")
+    } else if (input$variable == "Lewis-Beck"){
+      points(as.numeric(row.names(presidentialForecast)), presidentialForecast$`Lewis-Beck`, col = "red")
+    } else if (input$variable == "EWT2C2"){
+      points(as.numeric(row.names(presidentialForecast)), presidentialForecast$EWT2C2, col = "red")
+    } else if (input$variable == "Fair"){
+      points(as.numeric(row.names(presidentialForecast)), presidentialForecast$Fair, col = "red")
+    } else if (input$variable == "Hibbs"){
+      points(as.numeric(row.names(presidentialForecast)), presidentialForecast$Hibbs, col = "red")
+    } else {
+      points(as.numeric(row.names(presidentialForecast)), presidentialForecast$Abramowitz, col = "red")
+    }
   })
   
 }
